@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
             WaterTrackerTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Android",
+                        name = "semestralna praca",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
