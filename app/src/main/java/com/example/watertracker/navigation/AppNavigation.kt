@@ -1,15 +1,15 @@
 package com.example.watertracker.navigation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.watertracker.screens.AddWaterScreen
+import com.example.watertracker.screens.HomeScreen
 
 @Composable
 fun AppNavigation() {
@@ -26,15 +26,14 @@ fun AppNavigation() {
             navController = navController,
             startDestination = Screen.Home.route,
             modifier = Modifier.padding(paddingValues)
-
         ) {
 
             composable(Screen.Home.route) {
-                Text("Home Screen")
+                HomeScreen()
             }
 
             composable(Screen.Add.route) {
-                Text("Add Screen")
+                AddWaterScreen()
             }
 
             composable(Screen.History.route) {

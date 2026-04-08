@@ -2,8 +2,8 @@ package com.example.watertracker.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -28,8 +28,8 @@ fun BottomBar(navController: NavController) {
                     launchSingleTop = true
                 }
             },
-            icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-            label = { Text("Home") }
+            icon = { Icon(Icons.Default.Home, contentDescription = "Domov") },
+            label = { Text("Domov") }
         )
 
         NavigationBarItem(
@@ -40,8 +40,8 @@ fun BottomBar(navController: NavController) {
                     launchSingleTop = true
                 }
             },
-            icon = { Icon(Icons.Default.Add, contentDescription = "Add") },
-            label = { Text("Add") }
+            icon = { Icon(Icons.Default.Add, contentDescription = "Pridať") },
+            label = { Text("Pridať") }
         )
 
         NavigationBarItem(
@@ -52,8 +52,8 @@ fun BottomBar(navController: NavController) {
                     launchSingleTop = true
                 }
             },
-            icon = { Icon(Icons.AutoMirrored.Default.List, contentDescription = "History") },
-            label = { Text("History") }
+            icon = { Icon(Icons.AutoMirrored.Default.List, contentDescription = "História") },
+            label = { Text("História") }
         )
     }
 }
