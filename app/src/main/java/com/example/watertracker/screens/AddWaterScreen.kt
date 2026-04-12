@@ -1,6 +1,5 @@
 package com.example.watertracker.screens
 
-
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,9 +21,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.watertracker.R
 
 @Composable
 @Preview
@@ -55,7 +56,7 @@ fun AddWaterScreen() {
                     waterAmount = number
                 }
             },
-            label = { Text("Zadaj množstvo (ml)") },
+            label = { Text(stringResource(R.string.add_water_input_placeholder)) },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number
@@ -65,7 +66,7 @@ fun AddWaterScreen() {
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = "$waterAmount ml",
+            text = "$waterAmount" + stringResource(R.string.add_water_ml_text),
             style = MaterialTheme.typography.headlineMedium
         )
 
@@ -80,7 +81,7 @@ fun AddWaterScreen() {
             },
                 modifier = Modifier.width(150.dp)
             ) {
-                Text("-10")
+                Text(stringResource(R.string.add_water_ml_minus_10))
             }
 
             Spacer(modifier = Modifier.width(16.dp))
@@ -93,19 +94,20 @@ fun AddWaterScreen() {
             },
                 modifier = Modifier.width(150.dp)
             ) {
-                Text("+10")
+                Text(stringResource(R.string.add_water_ml_plus_10))
             }
         }
 
         Spacer(modifier = Modifier.height(32.dp))
-
+        val savedText = stringResource(R.string.add_water_saved)
+        val mlText = stringResource(R.string.add_water_ml_text)
         Button(
             onClick = {
-                println("Uložené: $waterAmount ml")
+                println(savedText + waterAmount + mlText)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Uložiť")
+            Text(stringResource(R.string.add_water_save))
         }
     }
 }

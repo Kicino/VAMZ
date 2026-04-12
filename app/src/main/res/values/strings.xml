@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">Water tracker</string>
+
+    <!--menubar-->
+    <string name="bar_home">Domov</string>
+    <string name="bar_add">Pridať</string>
+    <string name="bar_history">História</string>
+
+
+    <!--mainscreen-->
+    <string name="main_image_description">Stav vody</string>
+    <string name="main_screen_text1">Dnes si vypil\u0020</string>
+    <string name="main_screen_text2">/2,5 l vody</string>
+
+
+    <!--addwaterscreen-->
+    <string name="add_water_input_placeholder">Zadaj množstvo (ml)</string>
+    <string name="add_water_ml_text">\u0020ml</string>
+    <string name="add_water_ml_minus_10">-10</string>
+    <string name="add_water_ml_plus_10">+10</string>
+    <string name="add_water_saved">Uložené:\u0020</string>
+    <string name="add_water_save">Uložiť</string>
 </resources>

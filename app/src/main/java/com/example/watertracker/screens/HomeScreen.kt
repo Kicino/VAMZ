@@ -29,6 +29,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import com.example.watertracker.R
 
 @Composable
@@ -85,7 +86,7 @@ fun HomeScreen() {
                 ) {
                     Image(
                         painter = painterResource(id = imageRes),
-                        contentDescription = "Stav vody",
+                        contentDescription = stringResource(R.string.main_image_description),
                         modifier = Modifier.fillMaxSize()
                     )
                 }
@@ -93,7 +94,7 @@ fun HomeScreen() {
                 Spacer(modifier = Modifier.width(32.dp))
 
                 Text(
-                    text = "Dnes si vypil " + String.format(java.util.Locale.getDefault(), "%.2f", progress * 2.5) + "/2,5 l vody",
+                    text = stringResource(R.string.main_screen_text1) + String.format(java.util.Locale.getDefault(), "%.2f", progress * 2.5) + stringResource(R.string.main_screen_text2),
                     style = MaterialTheme.typography.headlineSmall
                 )
             }
@@ -115,7 +116,7 @@ fun HomeScreen() {
                 ) {
                     Image(
                         painter = painterResource(id = imageRes),
-                        contentDescription = "Stav vody",
+                        contentDescription = stringResource(R.string.main_image_description),
                         modifier = Modifier.fillMaxSize()
                     )
                 }
@@ -123,7 +124,7 @@ fun HomeScreen() {
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Text(
-                    text = "Dnes si vypil " + String.format(java.util.Locale.getDefault(), "%.2f", progress * 2.5) + "/2,5 l vody",
+                    text = stringResource(R.string.main_screen_text1) + String.format(java.util.Locale.getDefault(), "%.2f", progress * 2.5) + stringResource(R.string.main_screen_text2),
                     style = MaterialTheme.typography.headlineSmall
                 )
             }
