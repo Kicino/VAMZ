@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -18,7 +19,7 @@ import com.example.watertracker.screens.HomeScreen
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-    var totalWater by remember { mutableStateOf(0) }
+    var totalWater by rememberSaveable { mutableStateOf(0f) }
 
     Scaffold(
         bottomBar = {
@@ -38,7 +39,9 @@ fun AppNavigation() {
             }
 
             composable(Screen.Add.route) {
-                AddWaterScreen { addedAmount -> totalWater += addedAmount }
+                AddWaterScreen(navController) { addedAmount ->
+                    totalWater += addedAmount
+                }
             }
 
             composable(Screen.History.route) {

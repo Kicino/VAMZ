@@ -20,4 +20,8 @@
     <string name="add_water_ml_plus_10">+10</string>
     <string name="add_water_saved">Uložené:\u0020</string>
     <string name="add_water_save">Uložiť</string>
+
+    <!--toast-->
+    <string name="toast_first">Pridal si\u0020</string>
+    <string name="toast_second">\u0020ml vody</string>
 </resources>
