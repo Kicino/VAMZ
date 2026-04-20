@@ -4,22 +4,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.watertracker.API.WaterViewModel
+import com.example.watertracker.WaterViewModelFactory
+import com.example.watertracker.data.AppDataContainer
 import com.example.watertracker.screens.AddWaterScreen
 import com.example.watertracker.screens.HomeScreen
 
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-    var totalWater by rememberSaveable { mutableStateOf(0f) }
+    val viewModel: WaterViewModel = viewModel(
+        factory = WaterViewModelFactory(AppDataContainer(navController.context).itemsRepository)
+    )
 
     Scaffold(
         bottomBar = {
@@ -35,13 +36,11 @@ fun AppNavigation() {
         ) {
 
             composable(Screen.Home.route) {
-                HomeScreen(totalWater)
+                HomeScreen(viewModel)
             }
 
             composable(Screen.Add.route) {
-                AddWaterScreen(navController) { addedAmount ->
-                    totalWater += addedAmount
-                }
+                AddWaterScreen(navController, viewModel)
             }
 
             composable(Screen.History.route) {

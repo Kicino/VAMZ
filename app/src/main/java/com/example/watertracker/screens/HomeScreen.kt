@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,14 +33,17 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import com.example.watertracker.API.WaterViewModel
 import com.example.watertracker.R
 import kotlinx.coroutines.delay
 
 @Composable
-fun HomeScreen(totalWater: Float) {
+fun HomeScreen(viewModel: WaterViewModel) {
 
+
+    val totalWater by viewModel.totalWater.collectAsState()
     val goal = 2500f
-    val progress = (totalWater / goal).coerceIn(0f, 2f)
+    val progress = (totalWater.toFloat() / goal).coerceIn(0f, 2f)
 
     val imageRes = when {
         progress < 0.4f -> R.drawable.thirsty

@@ -42,11 +42,12 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
+import com.example.watertracker.API.WaterViewModel
 
 @Composable
 fun AddWaterScreen(
     navController: NavController,
-    onAddWater: (Int) -> Unit
+    viewModel : WaterViewModel
 ) {
 
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -72,7 +73,7 @@ fun AddWaterScreen(
                 val currentTime = System.currentTimeMillis()
 
                 if (!isLandscape) {
-                    if (currentTime - lastUpdate > 300) {
+                    if (currentTime - lastUpdate > 50) {
                         lastUpdate = currentTime
 
                         if (x > 5) {
@@ -196,7 +197,7 @@ fun AddWaterScreen(
                 onClick = {
                     scope.launch {
 
-                        onAddWater(waterAmount)
+                        viewModel.addWater(waterAmount)
                         keyboardController?.hide()
                         delay(100)
 
