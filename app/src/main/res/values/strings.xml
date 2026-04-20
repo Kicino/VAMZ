@@ -24,4 +24,17 @@
     <!--toast-->
     <string name="toast_first">Pridal si\u0020</string>
     <string name="toast_second">\u0020ml vody</string>
+
+    <!--history-->
+    <string name="history_screen_info">Graf za poslendých 7 dní</string>
+
+    <!--chart-->
+    <string name="chart_ml">\u0020ml</string>
+    <string name="chart_monday">Po</string>
+    <string name="chart_thursday">Ut</string>
+    <string name="chart_wendsday">St</string>
+    <string name="chart_thurstday">Št</string>
+    <string name="chart_friday">Pi</string>
+    <string name="chart_saturday">So</string>
+    <string name="chart_sunday">Ne</string>
 </resources>

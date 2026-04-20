@@ -5,6 +5,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,6 +18,7 @@ import com.example.watertracker.screens.HistoryScreen
 import com.example.watertracker.screens.HomeScreen
 
 @Composable
+@Preview(showBackground = true)
 fun AppNavigation() {
     val navController = rememberNavController()
     val viewModel: WaterViewModel = viewModel(
