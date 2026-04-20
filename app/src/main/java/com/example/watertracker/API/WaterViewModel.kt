@@ -35,4 +35,41 @@ class WaterViewModel(
             )
         }
     }
+    //resetnutie celej tabulky, pre testovanie
+    fun resetData() {
+        viewModelScope.launch {
+            repository.deleteAllItems()
+        }
+    }
+
+    //priprava dat na graf
+    val weeklyData: StateFlow<List<Pair<String, Int>>> =
+        repository.getAllItemsStream()
+            .map { items ->
+
+                val now = System.currentTimeMillis()
+                val dayMillis = 24 * 60 * 60 * 1000L
+
+                val last7Days = (0..6).map { i ->
+                    val start = now - i * dayMillis
+                    val dayStart = start - (start % dayMillis)
+
+                    val dayEnd = dayStart + dayMillis
+
+                    val total = items
+                        .filter { it.timestamp in dayStart until dayEnd }
+                        .sumOf { it.amount }
+
+                    val label = when (i) {
+                        0 -> "Today"
+                        1 -> "1d ago"
+                        else -> "${i}d"
+                    }
+
+                    label to total
+                }
+
+                last7Days.reversed()
+            }
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 }

@@ -42,6 +42,8 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.sp
 import com.example.watertracker.API.WaterViewModel
 
 @Composable
@@ -112,7 +114,11 @@ fun AddWaterScreen(
                     waterAmount = number
                 }
             },
-            label = { Text(stringResource(R.string.add_water_input_placeholder)) },
+            label = { Text(stringResource(R.string.add_water_input_placeholder),
+                fontSize = 24.sp) },
+            textStyle = TextStyle(
+                fontSize = 24.sp
+            ),
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number

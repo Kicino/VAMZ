@@ -16,4 +16,8 @@ class OfflineItemsRepository(private val itemDao: ItemDao) : ItemsRepository {
     override fun getTotalWaterStream(): Flow<Int?> {
         return itemDao.getTotalWater()
     }
+
+    override suspend fun deleteAllItems() {
+        itemDao.deleteAll()
+    }
 }

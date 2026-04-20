@@ -20,6 +20,9 @@ interface ItemDao {
     @Delete
     suspend fun delete(item: Item)
 
+    @Query("DELETE FROM water")
+    suspend fun deleteAll()
+
     @Query("SELECT * from water where id = :id")
     fun getItem(id: Int): Flow<Item>
 

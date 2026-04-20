@@ -13,6 +13,7 @@ import com.example.watertracker.API.WaterViewModel
 import com.example.watertracker.WaterViewModelFactory
 import com.example.watertracker.data.AppDataContainer
 import com.example.watertracker.screens.AddWaterScreen
+import com.example.watertracker.screens.HistoryScreen
 import com.example.watertracker.screens.HomeScreen
 
 @Composable
@@ -44,7 +45,7 @@ fun AppNavigation() {
             }
 
             composable(Screen.History.route) {
-                Text("History Screen")
+                HistoryScreen(viewModel)
             }
         }
     }

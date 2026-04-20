@@ -23,6 +23,8 @@ interface ItemsRepository {
      */
     suspend fun deleteItem(item: Item)
 
+    suspend fun deleteAllItems()
+
     /**
      * Update item in the data source
      */
