@@ -32,10 +32,12 @@ import com.example.watertracker.R
 import androidx.compose.foundation.combinedClickable
 
 @Composable
-fun HomeScreen(viewModel: WaterViewModel) {
+fun HomeScreen(
+    viewModel: WaterViewModel
+) {
 
 
-    val totalWater by viewModel.totalWater.collectAsState()
+    val totalWater by viewModel.todayWater.collectAsState()
     val goal = 2500f
     val progress = (totalWater.toFloat() / goal).coerceIn(0f, 2f)
 

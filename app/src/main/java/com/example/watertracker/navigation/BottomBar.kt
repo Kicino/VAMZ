@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -56,6 +57,18 @@ fun BottomBar(navController: NavController) {
             },
             icon = { Icon(Icons.AutoMirrored.Default.List, contentDescription = stringResource(R.string.bar_history)) },
             label = { Text(stringResource(R.string.bar_history)) }
+        )
+
+        NavigationBarItem(
+            selected = currentRoute == Screen.Settings.route,
+            onClick = {
+                navController.navigate(Screen.Settings.route) {
+                    popUpTo(navController.graph.startDestinationId)
+                    launchSingleTop = true
+                }
+            },
+            icon = { Icon(Icons.Default.Settings, contentDescription = stringResource(R.string.bar_settins)) },
+            label = { Text(stringResource(R.string.bar_settins)) }
         )
     }
 }

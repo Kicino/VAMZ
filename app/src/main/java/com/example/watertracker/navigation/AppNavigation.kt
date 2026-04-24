@@ -2,9 +2,9 @@ package com.example.watertracker.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -16,13 +16,14 @@ import com.example.watertracker.data.AppDataContainer
 import com.example.watertracker.screens.AddWaterScreen
 import com.example.watertracker.screens.HistoryScreen
 import com.example.watertracker.screens.HomeScreen
+import com.example.watertracker.screens.SettingsScreen
 
 @Composable
-@Preview(showBackground = true)
 fun AppNavigation() {
+    val context = LocalContext.current
     val navController = rememberNavController()
     val viewModel: WaterViewModel = viewModel(
-        factory = WaterViewModelFactory(AppDataContainer(navController.context).itemsRepository)
+        factory = WaterViewModelFactory(AppDataContainer(context).itemsRepository)
     )
 
     Scaffold(
@@ -48,6 +49,10 @@ fun AppNavigation() {
 
             composable(Screen.History.route) {
                 HistoryScreen(viewModel)
+            }
+
+            composable(Screen.Settings.route) {
+                SettingsScreen(viewModel)
             }
         }
     }

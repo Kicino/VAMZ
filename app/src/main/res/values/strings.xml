@@ -5,6 +5,7 @@
     <string name="bar_home">Domov</string>
     <string name="bar_add">Pridať</string>
     <string name="bar_history">História</string>
+    <string name="bar_settins">Nastavenia</string>
 
 
     <!--mainscreen-->
@@ -37,4 +38,16 @@
     <string name="chart_friday">Pi</string>
     <string name="chart_saturday">So</string>
     <string name="chart_sunday">Ne</string>
+
+    <!--settings-->
+    <string name="settings_reminders">Pripomienky</string>
+    <string name="settings_reminders_times">Čas pripomienok</string>
+    <string name="settings_reminders_delete_time">Odstrániť pripomienku</string>
+    <string name="settings_reminders_add_time">\u0020Pridať pripomienku</string>
+    <string name="settings_reminders_daily_goal">Denný cieľ:\u0020</string>
+    <string name="settings_reminders_delete_data">Odstrániť dáta</string>
+    <string name="settings_reminders_confrim">Naozaj?</string>
+    <string name="settings_reminders_question">Naozaj si prajete odstrániť všetky dáta?</string>
+    <string name="settings_reminders_yes">Áno</string>
+    <string name="settings_reminders_no">Nie</string>
 </resources>

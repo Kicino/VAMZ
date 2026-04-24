@@ -1,6 +1,5 @@
 package com.example.watertracker.API
 
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.watertracker.data.Item
@@ -23,6 +22,35 @@ class WaterViewModel(
             .stateIn(
                 viewModelScope,
                 SharingStarted.Companion.WhileSubscribed(5000),
+                0
+            )
+
+    //len dnesna hodnota vody
+    val todayWater: StateFlow<Int> =
+        repository.getAllItemsStream()
+            .map { items ->
+
+                val cal = Calendar.getInstance()
+
+                // začiatok dnešného dňa
+                cal.set(Calendar.HOUR_OF_DAY, 0)
+                cal.set(Calendar.MINUTE, 0)
+                cal.set(Calendar.SECOND, 0)
+                cal.set(Calendar.MILLISECOND, 0)
+
+                val start = cal.timeInMillis
+
+                // koniec dňa
+                cal.add(Calendar.DAY_OF_YEAR, 1)
+                val end = cal.timeInMillis
+
+                items
+                    .filter { it.timestamp in start until end }
+                    .sumOf { it.amount }
+            }
+            .stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(5000),
                 0
             )
 
@@ -49,24 +77,31 @@ class WaterViewModel(
         repository.getAllItemsStream()
             .map { items ->
 
-                val now = System.currentTimeMillis()
-                val dayMillis = 24 * 60 * 60 * 1000L
-
                 (0..6).map { i ->
-                    val start = now - i * dayMillis
-                    val dayStart = start - (start % dayMillis)
-                    val dayEnd = dayStart + dayMillis
+
+                    val cal = Calendar.getInstance()
+                    cal.add(Calendar.DAY_OF_YEAR, -i)
+
+                    // začiatok dňa (00:00)
+                    cal.set(Calendar.HOUR_OF_DAY, 0)
+                    cal.set(Calendar.MINUTE, 0)
+                    cal.set(Calendar.SECOND, 0)
+                    cal.set(Calendar.MILLISECOND, 0)
+
+                    val dayStart = cal.timeInMillis
+
+                    // uložíme deň (SPRÁVNY)
+                    val dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)
+
+                    // koniec dňa
+                    cal.add(Calendar.DAY_OF_YEAR, 1)
+                    val dayEnd = cal.timeInMillis
 
                     val total = items
                         .filter { it.timestamp in dayStart until dayEnd }
                         .sumOf { it.amount }
 
-                    val calendar = Calendar.getInstance()
-                    calendar.timeInMillis = dayStart
-
-                    val day = calendar.get(Calendar.DAY_OF_WEEK)
-
-                    day to total
+                    dayOfWeek to total
                 }.reversed()
             }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
