@@ -1,4 +1,4 @@
-package com.example.watertracker.data
+package com.example.watertracker.dataRoom
 
 import androidx.room.Dao
 import androidx.room.Delete

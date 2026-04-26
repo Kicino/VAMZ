@@ -38,8 +38,8 @@ fun HomeScreen(
 
 
     val totalWater by viewModel.todayWater.collectAsState()
-    val goal = 2500f
-    val progress = (totalWater.toFloat() / goal).coerceIn(0f, 2f)
+    val goal by viewModel.dailyGoal.collectAsState()
+    val progress = (totalWater.toFloat() / goal).coerceIn(0f, 1f)
 
     val imageRes = when {
         progress < 0.4f -> R.drawable.thirsty
@@ -49,6 +49,10 @@ fun HomeScreen(
 
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
+    //premenne na vypis
+    val totalLiters = totalWater / 1000f
+    val goalLiters = goal / 1000f
 
     Column(
         modifier = Modifier
@@ -104,7 +108,11 @@ fun HomeScreen(
                 Spacer(modifier = Modifier.width(32.dp))
 
                 Text(
-                    text = stringResource(R.string.main_screen_text1) + String.format(java.util.Locale.getDefault(), "%.2f", progress * 2.5) + stringResource(R.string.main_screen_text2),
+                    text = stringResource(R.string.main_screen_text1) +
+                            String.format(java.util.Locale.getDefault(), "%.2f", totalLiters) +
+                            " / " +
+                            String.format(java.util.Locale.getDefault(), "%.2f", goalLiters) +
+                            stringResource(R.string.main_screen_text2),
                     style = MaterialTheme.typography.headlineSmall
                 )
             }
@@ -141,7 +149,11 @@ fun HomeScreen(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Text(
-                    text = stringResource(R.string.main_screen_text1) + String.format(java.util.Locale.getDefault(), "%.2f", progress * 2.5) + stringResource(R.string.main_screen_text2),
+                    text = stringResource(R.string.main_screen_text1) +
+                            String.format(java.util.Locale.getDefault(), "%.2f", totalLiters) +
+                            " / " +
+                            String.format(java.util.Locale.getDefault(), "%.2f", goalLiters) +
+                            stringResource(R.string.main_screen_text2),
                     style = MaterialTheme.typography.headlineSmall
                 )
             }

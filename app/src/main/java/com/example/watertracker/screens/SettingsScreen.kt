@@ -37,7 +37,7 @@ fun SettingsScreen(viewModel: WaterViewModel) {
     }
 
     // daily goal
-    var dailyGoal by remember { mutableStateOf(2500f) }
+    val dailyGoal by viewModel.dailyGoal.collectAsState()
 
     // dialog
     var showDialog by remember { mutableStateOf(false) }
@@ -178,14 +178,14 @@ fun SettingsScreen(viewModel: WaterViewModel) {
                 Column(modifier = Modifier.padding(16.dp)) {
 
                     Text(stringResource(
-                        R.string.settings_reminders_daily_goal) + dailyGoal.toInt() + stringResource(R.string.chart_ml),
+                        R.string.settings_reminders_daily_goal) + dailyGoal + stringResource(R.string.chart_ml),
                         modifier = Modifier.scale(1.2f)
                             .padding(10.dp, 0.dp)
                     )
 
                     Slider(
-                        value = dailyGoal,
-                        onValueChange = { dailyGoal = it },
+                        value = dailyGoal.toFloat(),
+                        onValueChange = { viewModel.setDailyGoal(it.toInt()) },
                         valueRange = 2000f..5000f,
                         steps = 5
                     )

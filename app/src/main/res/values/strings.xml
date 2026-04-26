@@ -11,7 +11,7 @@
     <!--mainscreen-->
     <string name="main_image_description">Stav vody</string>
     <string name="main_screen_text1">Dnes si vypil\u0020</string>
-    <string name="main_screen_text2">/2,50 l vody</string>
+    <string name="main_screen_text2">\u0020l vody</string>
 
 
     <!--addwaterscreen-->

@@ -1,4 +1,4 @@
-package com.example.watertracker.data
+package com.example.watertracker.dataRoom
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

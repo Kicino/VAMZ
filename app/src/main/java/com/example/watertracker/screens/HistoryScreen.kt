@@ -17,8 +17,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.watertracker.API.WaterViewModel
 import com.example.watertracker.R
-import com.example.watertracker.data.HistoryItem
-import com.example.watertracker.data.WeeklyChart
+import com.example.watertracker.dataRoom.HistoryItem
+import com.example.watertracker.dataRoom.WeeklyChart
 
 @Composable
 fun HistoryScreen(viewModel: WaterViewModel) {

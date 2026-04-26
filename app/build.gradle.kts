@@ -54,6 +54,9 @@ dependencies {
     ksp("androidx.room:room-compiler:${rootProject.extra["room_version"]}")
     implementation("androidx.room:room-ktx:${rootProject.extra["room_version"]}")
 
+    //dataStore
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
+
     //graf
     implementation("com.patrykandpatrick.vico:compose:1.13.1")
     implementation(libs.androidx.compose.ui.text)

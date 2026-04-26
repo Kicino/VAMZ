@@ -1,4 +1,4 @@
-package com.example.watertracker.data
+package com.example.watertracker.dataRoom
 
 import android.content.Context
 import androidx.room.Database

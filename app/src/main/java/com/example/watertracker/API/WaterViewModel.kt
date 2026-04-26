@@ -2,8 +2,9 @@ package com.example.watertracker.API
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.watertracker.data.Item
-import com.example.watertracker.data.ItemsRepository
+import com.example.watertracker.dataRoom.Item
+import com.example.watertracker.dataRoom.ItemsRepository
+import com.example.watertracker.dataStore.UserPreferencesRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -12,8 +13,27 @@ import kotlinx.coroutines.launch
 import java.util.Calendar
 
 class WaterViewModel(
-    private val repository: ItemsRepository
+    private val repository: ItemsRepository,
+    private val preferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
+
+    //premenna na daily goal
+    val dailyGoal: StateFlow<Int> =
+        preferencesRepository.dailyGoalFlow
+            .stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(5000),
+                2500
+            )
+
+    //setter na daily goal
+    fun setDailyGoal(goal: Int) {
+        viewModelScope.launch {
+            preferencesRepository.saveDailyGoal(goal)
+        }
+    }
+
+
 
     //celkové množstvo vody
     val totalWater: StateFlow<Int> =

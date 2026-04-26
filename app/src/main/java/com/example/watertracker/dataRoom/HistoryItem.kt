@@ -1,4 +1,4 @@
-package com.example.watertracker.data
+package com.example.watertracker.dataRoom
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
