@@ -35,14 +35,14 @@ class WaterViewModel(
 
 
     //celkové množstvo vody
-    val totalWater: StateFlow<Int> =
-        repository.getTotalWaterStream()
-            .map { it ?: 0 }
-            .stateIn(
-                viewModelScope,
-                SharingStarted.WhileSubscribed(5000),
-                0
-            )
+//    val totalWater: StateFlow<Int> =
+//        repository.getTotalWaterStream()
+//            .map { it ?: 0 }
+//            .stateIn(
+//                viewModelScope,
+//                SharingStarted.WhileSubscribed(5000),
+//                0
+//            )
 
     //len dnesna hodnota vody
     val todayWater: StateFlow<Int> =
