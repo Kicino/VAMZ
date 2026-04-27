@@ -1,10 +1,16 @@
 package com.example.watertracker.navigation
 
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -20,7 +26,7 @@ import com.example.watertracker.screens.SettingsScreen
 @Composable
 fun AppNavigation() {
     val context = LocalContext.current
-    val navController = rememberNavController()
+    val navController = rememberNavController()//navigacia medzi screenmi
     val viewModel: WaterViewModel = viewModel(
         factory = WaterViewModelFactory(
             AppDataContainer(context).itemsRepository,
@@ -28,13 +34,13 @@ fun AppNavigation() {
         )
     )
 
+    //urobenie okna v ktorom budem otvarat ostatne okna
     Scaffold(
         bottomBar = {
             BottomBar(navController)
         }
     ) { paddingValues ->
 
-        //nastavenie vlastnosti pre kazdu obrazovku
         NavHost(
             navController = navController,
             startDestination = Screen.Home.route,
@@ -58,4 +64,25 @@ fun AppNavigation() {
             }
         }
     }
+
+
+    ////AI generovany sposob pytania sa na autorizaciu upozorneni
+    //poziadanie uzivatela o autorizovanie na upozornenia
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+        onResult = { granted -> }
+    )
+
+    LaunchedEffect(Unit) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    context,
+                    android.Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                launcher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+    }
+    ////
 }

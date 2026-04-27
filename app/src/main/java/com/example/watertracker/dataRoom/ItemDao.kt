@@ -8,6 +8,8 @@ import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
+//robene podla https://developer.android.com/codelabs/basic-android-kotlin-compose-persisting-data-room#0
+///SQL queries
 @Dao
 interface ItemDao {
 

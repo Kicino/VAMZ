@@ -15,11 +15,15 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun HistoryItem(item: Item) {
 
+    ////AI generovane formatovanie dat do listu z databazy
     val date = java.text.SimpleDateFormat(
         "EEE, dd.MM.yyyy HH:mm",
         java.util.Locale.getDefault()
     ).format(java.util.Date(item.timestamp))
+    ////
 
+
+    //stylisticke vlastnosti pre kazdy prvok z room databazy
     Card(
         modifier = Modifier
             .fillMaxWidth()

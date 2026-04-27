@@ -22,13 +22,13 @@ fun BottomBar(navController: NavController) {
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
     NavigationBar {
-
+        //nastavenie samostantych tlacidiel v bare
         NavigationBarItem(
-            selected = currentRoute == Screen.Home.route,
+            selected = (currentRoute == Screen.Home.route),//ak sedi zvirazni
             onClick = {
                 navController.navigate(Screen.Home.route) {
-                    popUpTo(navController.graph.startDestinationId)
-                    launchSingleTop = true
+                    popUpTo(navController.graph.startDestinationId)//vycisti nam historiu screenov
+                    launchSingleTop = true//zabrani duplikatu
                 }
             },
             icon = { Icon(Icons.Default.Home, contentDescription = stringResource(R.string.bar_home)) },
@@ -36,7 +36,7 @@ fun BottomBar(navController: NavController) {
         )
 
         NavigationBarItem(
-            selected = currentRoute == Screen.Add.route,
+            selected = (currentRoute == Screen.Add.route),
             onClick = {
                 navController.navigate(Screen.Add.route) {
                     popUpTo(navController.graph.startDestinationId)
@@ -48,7 +48,7 @@ fun BottomBar(navController: NavController) {
         )
 
         NavigationBarItem(
-            selected = currentRoute == Screen.History.route,
+            selected = (currentRoute == Screen.History.route),
             onClick = {
                 navController.navigate(Screen.History.route) {
                     popUpTo(navController.graph.startDestinationId)
@@ -60,7 +60,7 @@ fun BottomBar(navController: NavController) {
         )
 
         NavigationBarItem(
-            selected = currentRoute == Screen.Settings.route,
+            selected = (currentRoute == Screen.Settings.route),
             onClick = {
                 navController.navigate(Screen.Settings.route) {
                     popUpTo(navController.graph.startDestinationId)

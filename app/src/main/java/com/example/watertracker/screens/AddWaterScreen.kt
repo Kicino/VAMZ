@@ -61,6 +61,8 @@ fun AddWaterScreen(
 
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
+    ////Ai generovane pouzitie senzora
     //premenne na senzor, upravuje nam natocenie podla telefonu, ci je po vyske, alebo sirke
     val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
     val sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
@@ -69,7 +71,6 @@ fun AddWaterScreen(
         object : SensorEventListener {
             override fun onSensorChanged(event: SensorEvent?) {
                 val values = event?.values ?: return
-
                 val x = values[0]
 
                 val currentTime = System.currentTimeMillis()
@@ -95,6 +96,7 @@ fun AddWaterScreen(
             override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
         }
     }
+    ////
 
     Column(
         modifier = Modifier
@@ -107,7 +109,7 @@ fun AddWaterScreen(
         OutlinedTextField(
             value = inputText,
             onValueChange = {
-                inputText = it
+                inputText = it//it text ktory napisal pouzivatel do inputu
 
                 val number = it.toIntOrNull()
                 if (number != null) {
@@ -115,7 +117,7 @@ fun AddWaterScreen(
                 }
             },
             label = { Text(stringResource(R.string.add_water_input_placeholder),
-                fontSize = 24.sp) },
+            fontSize = 24.sp) },
             textStyle = TextStyle(
                 fontSize = 24.sp
             ),
@@ -133,6 +135,7 @@ fun AddWaterScreen(
         )
 
         Spacer(modifier = Modifier.height(24.dp))
+
         if (!isLandscape) {
             Row {
                 Button(
@@ -196,13 +199,14 @@ fun AddWaterScreen(
         }
 
         Spacer(modifier = Modifier.height(32.dp))
+
         val toastFirst = stringResource(R.string.toast_first)
         val toastSecond = stringResource(R.string.toast_second)
         val scope = rememberCoroutineScope()
             Button(
                 onClick = {
+                    //tu musi byt scope, aby som mohol pouzit delay
                     scope.launch {
-
                         viewModel.addWater(waterAmount)
                         keyboardController?.hide()
                         delay(100)
@@ -230,16 +234,17 @@ fun AddWaterScreen(
             }
     }
 
+    //AI generovane
+    //potrebne veci na pocuvanie senzora
     DisposableEffect(Unit) {
-
         sensorManager.registerListener(
             sensorListener,
             sensor,
             SensorManager.SENSOR_DELAY_NORMAL
         )
-
         onDispose {
             sensorManager.unregisterListener(sensorListener)
         }
     }
+    //
 }

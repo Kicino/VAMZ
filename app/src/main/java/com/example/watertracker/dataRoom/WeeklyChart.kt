@@ -16,7 +16,10 @@ import java.util.Calendar
 @Composable
 fun WeeklyChart(data: List<Pair<Int, Int>>) {
 
-    if (data.isEmpty()) return
+    //zakladne nastavenie dat a vlastnosti grafu
+    if (data.isEmpty()) {
+        return
+    }
 
     @Composable
     fun dayToString(day: Int): String {

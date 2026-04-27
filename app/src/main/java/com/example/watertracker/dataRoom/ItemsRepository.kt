@@ -2,6 +2,9 @@ package com.example.watertracker.dataRoom
 
 import kotlinx.coroutines.flow.Flow
 
+//robene podla https://developer.android.com/codelabs/basic-android-kotlin-compose-persisting-data-room#0
+//funkcie ktore nam volaju SQL queries
+
 interface ItemsRepository {
     /**
      * Retrieve all the items from the the given data source.

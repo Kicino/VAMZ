@@ -36,10 +36,9 @@ fun HomeScreen(
     viewModel: WaterViewModel
 ) {
 
-
     val totalWater by viewModel.todayWater.collectAsState()
     val goal by viewModel.dailyGoal.collectAsState()
-    val progress = (totalWater.toFloat() / goal).coerceIn(0f, 1f)
+    val progress = (totalWater.toFloat() / goal).coerceIn(0f, 1f)//vypocita percento 0 - 100%
 
     val imageRes = when {
         progress < 0.4f -> R.drawable.thirsty
@@ -50,7 +49,7 @@ fun HomeScreen(
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
-    //premenne na vypis
+    //premenne na vypis prepoictane na litre
     val totalLiters = totalWater / 1000f
     val goalLiters = goal / 1000f
 
@@ -59,7 +58,6 @@ fun HomeScreen(
             .fillMaxSize()
             .fillMaxWidth()
     ) {
-
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -85,7 +83,6 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-
                 Box(
                     modifier = Modifier
                         .size(300.dp),
@@ -98,9 +95,7 @@ fun HomeScreen(
                             .fillMaxSize()
                             .combinedClickable(
                                 onClick = {},
-                                onLongClick = {
-                                    viewModel.resetData()
-                                }
+                                onLongClick = {}
                         )
                     )
                 }
@@ -139,9 +134,7 @@ fun HomeScreen(
                             .fillMaxSize()
                             .combinedClickable(
                                 onClick = {},
-                                onLongClick = {
-                                    viewModel.resetData()
-                                }
+                                onLongClick = {}
                             )
                     )
                 }

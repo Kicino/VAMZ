@@ -45,6 +45,7 @@ class WaterViewModel(
 //            )
 
     //len dnesna hodnota vody
+    ////Ai generovany vypocet len za dnesny den
     val todayWater: StateFlow<Int> =
         repository.getAllItemsStream()
             .map { items ->
@@ -72,6 +73,7 @@ class WaterViewModel(
                 SharingStarted.WhileSubscribed(5000),
                 0
             )
+    ////
 
     //pridanie vody
     fun addWater(amount: Int) {
@@ -84,6 +86,7 @@ class WaterViewModel(
             )
         }
     }
+
     //resetnutie celej tabulky, pre testovanie
     fun resetData() {
         viewModelScope.launch {
@@ -91,7 +94,8 @@ class WaterViewModel(
         }
     }
 
-    //priprava dat na graf
+    //priprava dat na graf za 7 dni
+    ////Ai generovany vypocet dat za poslednych 7 dni do grafu
     val weeklyData: StateFlow<List<Pair<Int, Int>>> =
         repository.getAllItemsStream()
             .map { items ->
@@ -124,19 +128,20 @@ class WaterViewModel(
                 }.reversed()
             }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    ////
 
-
+    //vratenie kompletnej historie
     val allItems: StateFlow<List<Item>> =
         repository.getAllItemsStream()
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
 
-    //pripomienky na pitie vody
+    //getter na pripomienky na pitie vody
     val reminderTimes: StateFlow<List<Pair<Int, Int>>> =
         preferencesRepository.reminderTimesFlow
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    //setter
+    //setter na pripomienky na pitie
     fun setReminderTimes(times: List<Pair<Int, Int>>) {
         viewModelScope.launch {
             preferencesRepository.saveReminderTimes(times)

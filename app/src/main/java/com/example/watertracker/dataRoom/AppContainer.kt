@@ -11,6 +11,9 @@ interface AppContainer {
 /**
  * [AppContainer] implementation that provides instance of [OfflineItemsRepository]
  */
+
+//robene podla https://developer.android.com/codelabs/basic-android-kotlin-compose-persisting-data-room#0
+
 class AppDataContainer(private val context: Context) : AppContainer {
     /**
      * Implementation for [ItemsRepository]

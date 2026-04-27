@@ -27,22 +27,20 @@ fun SettingsScreen(viewModel: WaterViewModel) {
 
     var notificationsEnabled by remember { mutableStateOf(true) }
 
-    //LIST ČASOV
+
     val reminderTimes by viewModel.reminderTimes.collectAsState()
-
-    // daily goal
     val dailyGoal by viewModel.dailyGoal.collectAsState()
-
-    // dialog
     var showDialog by remember { mutableStateOf(false) }
-
     val context = LocalContext.current
 
+    ////AI generovane okno pre nastavenie casov
     fun openTimePicker(index: Int) {
-        if (index !in reminderTimes.indices) return
+        if (index !in reminderTimes.indices) {
+            return
+        }
 
         val current = reminderTimes[index]
-
+        //prepisanie konkretnz cas v zozname pripomienok
         TimePickerDialog(
             context,
             { _, hour, minute ->
@@ -55,8 +53,9 @@ fun SettingsScreen(viewModel: WaterViewModel) {
             true
         ).show()
     }
+    ////
 
-    LazyColumn( //SCROLL FIX
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
@@ -66,8 +65,6 @@ fun SettingsScreen(viewModel: WaterViewModel) {
             Text(stringResource(R.string.bar_settins), style = MaterialTheme.typography.headlineMedium)
             Spacer(modifier = Modifier.height(24.dp))
         }
-
-        //SWITCH
         item {
             Card(modifier = Modifier.fillMaxWidth()) {
                 Row(
@@ -80,11 +77,8 @@ fun SettingsScreen(viewModel: WaterViewModel) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(Icons.Default.Notifications, contentDescription = null, modifier = Modifier.scale(1.2f))
-                        Spacer(
-                            modifier = Modifier.width(8.dp)
-                        )
-                        Text(stringResource(
-                            R.string.settings_reminders),
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(stringResource(R.string.settings_reminders),
                             modifier = Modifier.scale(1.4f)
                                 .padding(12.dp)
                         )
@@ -94,7 +88,6 @@ fun SettingsScreen(viewModel: WaterViewModel) {
                         checked = notificationsEnabled,
                         onCheckedChange = {
                             notificationsEnabled = it
-
                             if (it) {
                                 scheduleReminders(context, reminderTimes)
                             } else {
@@ -108,7 +101,6 @@ fun SettingsScreen(viewModel: WaterViewModel) {
 
         item { Spacer(modifier = Modifier.height(16.dp)) }
 
-        //LIST ČASOV
         item {
             Text(
                 stringResource(R.string.settings_reminders_times),
@@ -161,11 +153,10 @@ fun SettingsScreen(viewModel: WaterViewModel) {
             }
         }
 
-        //ADD TIME
         item {
             Button(
                 onClick = {
-                    viewModel.setReminderTimes(reminderTimes + Pair(12, 0))
+                    viewModel.setReminderTimes(reminderTimes + Pair(12, 0))//default budik po pridani na 12:00
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -180,7 +171,6 @@ fun SettingsScreen(viewModel: WaterViewModel) {
 
         item { Spacer(modifier = Modifier.height(24.dp)) }
 
-        //DAILY GOAL
         item {
             Card(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
@@ -203,7 +193,7 @@ fun SettingsScreen(viewModel: WaterViewModel) {
 
         item { Spacer(modifier = Modifier.height(32.dp)) }
 
-        // DELETE
+        //otvorenie dialogu na potvrdenie mazania dat
         item {
             Button(
                 onClick = { showDialog = true },

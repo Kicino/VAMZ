@@ -32,8 +32,8 @@ android {
         }
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
+    kotlin {
+        jvmToolchain(17)
     }
 
     compileOptions {
@@ -61,7 +61,7 @@ dependencies {
     //graf
     implementation("com.patrykandpatrick.vico:compose:1.13.1")
 
-    //reinders
+    //reminders
     implementation("androidx.work:work-runtime-ktx:2.9.0")
 
     implementation(libs.androidx.compose.ui.text)

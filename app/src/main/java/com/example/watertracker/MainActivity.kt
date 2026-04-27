@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         //vytvorenie notification channel
         createNotificationChannel()
 
-        //permission --Android 13+
+        //permission na notifikacie, od android 13
         if (Build.VERSION.SDK_INT >= 33) {
             ActivityCompat.requestPermissions(
                 this,
@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    //channel funkcia
+    //notificationChannel funkcia od android 8.0
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
@@ -42,7 +42,6 @@ class MainActivity : ComponentActivity() {
                 "Water reminders",
                 NotificationManager.IMPORTANCE_HIGH
             )
-
             val manager = getSystemService(NotificationManager::class.java)
             manager.createNotificationChannel(channel)
         }

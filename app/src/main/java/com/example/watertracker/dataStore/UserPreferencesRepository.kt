@@ -15,11 +15,13 @@ class UserPreferencesRepository(private val context: Context) {
         val DAILY_GOAL = intPreferencesKey("daily_goal")
     }
 
+    //getter na daily goal, ak je prazdny, da nam 2500
     val dailyGoalFlow = context.dataStore.data
         .map { preferences ->
             preferences[DAILY_GOAL] ?: 2500
         }
 
+    //setter na daily Goal
     suspend fun saveDailyGoal(goal: Int) {
         context.dataStore.edit { preferences ->
             preferences[DAILY_GOAL] = goal
@@ -27,7 +29,8 @@ class UserPreferencesRepository(private val context: Context) {
     }
 
 
-    ///////ulozenie casov na pripomienky
+    ///////ulozenie casov na pripomienky do pola
+    ////AI generovane
     suspend fun saveReminderTimes(times: List<Pair<Int, Int>>) {
         val serialized = times.joinToString(",") { "${it.first}:${it.second}" }
 
@@ -35,8 +38,10 @@ class UserPreferencesRepository(private val context: Context) {
             prefs[REMINDER_TIMES] = serialized
         }
     }
+    ////
 
-    //nacitanie
+    //nacitanie casov na pripomienky
+    ////AI generovane
     val reminderTimesFlow = context.dataStore.data.map { prefs ->
         prefs[REMINDER_TIMES]
             ?.takeIf { it.isNotBlank() }
@@ -51,4 +56,5 @@ class UserPreferencesRepository(private val context: Context) {
             }
             ?: emptyList()
     }
+    ////
 }

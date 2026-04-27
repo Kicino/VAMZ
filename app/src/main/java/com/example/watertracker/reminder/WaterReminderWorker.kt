@@ -17,11 +17,18 @@ class WaterReminderWorker(
         val notification = NotificationCompat.Builder(applicationContext, "water_channel")
             .setContentTitle(applicationContext.getString(R.string.reminder_title))
             .setContentText(applicationContext.getString(R.string.reminder_text))
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.thirsty)
             .build()
 
-        NotificationManagerCompat.from(applicationContext)
-            .notify(System.currentTimeMillis().toInt(), notification)
+        //kontrola ci mame opravnenue posielat notifikacie
+        if (androidx.core.content.ContextCompat.checkSelfPermission(
+                applicationContext,
+                android.Manifest.permission.POST_NOTIFICATIONS
+            ) == android.content.pm.PackageManager.PERMISSION_GRANTED
+        ) {
+            NotificationManagerCompat.from(applicationContext)
+                .notify(System.currentTimeMillis().toInt(), notification)
+        }
 
         return Result.success()
     }

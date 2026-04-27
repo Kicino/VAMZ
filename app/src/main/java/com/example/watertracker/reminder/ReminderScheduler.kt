@@ -15,7 +15,7 @@ fun scheduleReminders(context: Context, times: List<Pair<Int, Int>>) {
     times.forEach { (hour, minute) ->
 
         val now = Calendar.getInstance()
-
+        ////Ai generovane vypocitanie planovania notifikacii na kokretny den
         val target = Calendar.getInstance().apply {
             set(Calendar.HOUR_OF_DAY, hour)
             set(Calendar.MINUTE, minute)
@@ -33,5 +33,6 @@ fun scheduleReminders(context: Context, times: List<Pair<Int, Int>>) {
             .build()
 
         workManager.enqueue(work)
+        ////
     }
 }
