@@ -34,14 +34,13 @@ class WaterViewModel(
     }
 
 
-
     //celkové množstvo vody
     val totalWater: StateFlow<Int> =
         repository.getTotalWaterStream()
             .map { it ?: 0 }
             .stateIn(
                 viewModelScope,
-                SharingStarted.Companion.WhileSubscribed(5000),
+                SharingStarted.WhileSubscribed(5000),
                 0
             )
 
@@ -130,4 +129,17 @@ class WaterViewModel(
     val allItems: StateFlow<List<Item>> =
         repository.getAllItemsStream()
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+
+    //pripomienky na pitie vody
+    val reminderTimes: StateFlow<List<Pair<Int, Int>>> =
+        preferencesRepository.reminderTimesFlow
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    //setter
+    fun setReminderTimes(times: List<Pair<Int, Int>>) {
+        viewModelScope.launch {
+            preferencesRepository.saveReminderTimes(times)
+        }
+    }
 }

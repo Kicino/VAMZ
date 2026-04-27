@@ -17,8 +17,10 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.work.WorkManager
 import com.example.watertracker.API.WaterViewModel
 import com.example.watertracker.R
+import com.example.watertracker.reminder.scheduleReminders
 
 @Composable
 fun SettingsScreen(viewModel: WaterViewModel) {
@@ -26,15 +28,7 @@ fun SettingsScreen(viewModel: WaterViewModel) {
     var notificationsEnabled by remember { mutableStateOf(true) }
 
     //LIST ČASOV
-    var reminderTimes by remember {
-        mutableStateOf(
-            mutableListOf(
-                Pair(9, 0),
-                Pair(12, 0),
-                Pair(18, 0)
-            )
-        )
-    }
+    val reminderTimes by viewModel.reminderTimes.collectAsState()
 
     // daily goal
     val dailyGoal by viewModel.dailyGoal.collectAsState()
@@ -45,6 +39,8 @@ fun SettingsScreen(viewModel: WaterViewModel) {
     val context = LocalContext.current
 
     fun openTimePicker(index: Int) {
+        if (index !in reminderTimes.indices) return
+
         val current = reminderTimes[index]
 
         TimePickerDialog(
@@ -52,7 +48,7 @@ fun SettingsScreen(viewModel: WaterViewModel) {
             { _, hour, minute ->
                 val newList = reminderTimes.toMutableList()
                 newList[index] = Pair(hour, minute)
-                reminderTimes = newList
+                viewModel.setReminderTimes(newList)
             },
             current.first,
             current.second,
@@ -96,9 +92,15 @@ fun SettingsScreen(viewModel: WaterViewModel) {
 
                     Switch(
                         checked = notificationsEnabled,
-                        onCheckedChange = { notificationsEnabled = it },
-                        modifier = Modifier.scale(1.2f)
-                            .wrapContentWidth(Alignment.CenterHorizontally)
+                        onCheckedChange = {
+                            notificationsEnabled = it
+
+                            if (it) {
+                                scheduleReminders(context, reminderTimes)
+                            } else {
+                                WorkManager.getInstance(context).cancelAllWork()
+                            }
+                        }
                     )
                 }
             }
@@ -116,38 +118,44 @@ fun SettingsScreen(viewModel: WaterViewModel) {
             )
         }
 
-        itemsIndexed(reminderTimes) { index, time ->
+        if (reminderTimes.isNotEmpty()) {
+            itemsIndexed(
+                items = reminderTimes,
+                key = { _, item -> item.hashCode() }
+            ) { index, time ->
 
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 4.dp)
-                    .clickable { openTimePicker(index) }
-            ) {
-                Row(
-                    modifier = Modifier.padding(16.dp)
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp)
+                        .clickable { openTimePicker(index) }
                 ) {
-                    Text(
-                        "%02d:%02d".format(time.first, time.second),
-                        modifier = Modifier.scale(1.6f).
-                        padding(16.dp)
-                    )
-
-                    IconButton(
-                        onClick = {
-                            val newList = reminderTimes.toMutableList()
-                            newList.removeAt(index)
-                            reminderTimes = newList
-                        }
+                    Row(
+                        modifier = Modifier.padding(16.dp)
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(
-                            Icons.Default.Delete,
-                            contentDescription = stringResource(R.string.settings_reminders_delete_time),
-                            modifier = Modifier.scale(1.2f)
+                        Text(
+                            "%02d:%02d".format(time.first, time.second),
+                            modifier = Modifier.scale(1.6f).padding(16.dp)
                         )
+
+                        IconButton(
+                            onClick = {
+                                if (reminderTimes.size > 1) {
+                                    val newList = reminderTimes.toMutableList()
+                                    newList.removeAt(index)
+                                    viewModel.setReminderTimes(newList)
+                                }
+                            }
+                        ) {
+                            Icon(
+                                Icons.Default.Delete,
+                                contentDescription = stringResource(R.string.settings_reminders_delete_time),
+                                modifier = Modifier.scale(1.2f)
+                            )
+                        }
                     }
                 }
             }
@@ -157,7 +165,7 @@ fun SettingsScreen(viewModel: WaterViewModel) {
         item {
             Button(
                 onClick = {
-                    reminderTimes = (reminderTimes + Pair(12, 0)) as MutableList<Pair<Int, Int>>
+                    viewModel.setReminderTimes(reminderTimes + Pair(12, 0))
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -238,5 +246,16 @@ fun SettingsScreen(viewModel: WaterViewModel) {
                 }
             }
         )
+    }
+
+    //ked sa daco zmeni,vytvori sa novy plan notifikacii
+    LaunchedEffect(reminderTimes, notificationsEnabled) {
+        if (notificationsEnabled) {
+            if (reminderTimes.isEmpty()) {
+                WorkManager.getInstance(context).cancelAllWork()
+            } else {
+                scheduleReminders(context, reminderTimes)
+            }
+        }
     }
 }

@@ -50,4 +50,8 @@
     <string name="settings_reminders_question">Naozaj si prajete odstrániť všetky dáta?</string>
     <string name="settings_reminders_yes">Áno</string>
     <string name="settings_reminders_no">Nie</string>
+
+    <!--reminder-->
+    <string name="reminder_title">💧 Pripomienka</string>
+    <string name="reminder_text">Nezabudnite sa napiť vody!</string>
 </resources>

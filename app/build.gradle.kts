@@ -51,6 +51,7 @@ dependencies {
 
     //room
     implementation("androidx.room:room-runtime:${rootProject.extra["room_version"]}")
+    implementation(libs.androidx.work.runtime.ktx)
     ksp("androidx.room:room-compiler:${rootProject.extra["room_version"]}")
     implementation("androidx.room:room-ktx:${rootProject.extra["room_version"]}")
 
@@ -59,6 +60,10 @@ dependencies {
 
     //graf
     implementation("com.patrykandpatrick.vico:compose:1.13.1")
+
+    //reinders
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+
     implementation(libs.androidx.compose.ui.text)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
