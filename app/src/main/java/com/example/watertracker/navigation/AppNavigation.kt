@@ -67,10 +67,9 @@ fun AppNavigation() {
 
 
     ////AI generovany sposob pytania sa na autorizaciu upozorneni
-    //poziadanie uzivatela o autorizovanie na upozornenia
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
-        onResult = { granted -> }
+        onResult = {} //granted -> }
     )
 
     LaunchedEffect(Unit) {

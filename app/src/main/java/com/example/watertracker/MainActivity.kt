@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    //notificationChannel funkcia od android 8.0
+    //vytvorenie notificationChannel funkcia od android 8.0
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(

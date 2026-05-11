@@ -235,7 +235,7 @@ fun AddWaterScreen(
     }
 
     //AI generovane
-    //potrebne veci na pocuvanie senzora
+    //nastavenie pocuvanie senzora
     DisposableEffect(Unit) {
         sensorManager.registerListener(
             sensorListener,
