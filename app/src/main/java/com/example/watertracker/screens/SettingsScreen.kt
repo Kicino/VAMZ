@@ -113,7 +113,7 @@ fun SettingsScreen(viewModel: WaterViewModel) {
         if (reminderTimes.isNotEmpty()) {
             itemsIndexed(
                 items = reminderTimes,
-                key = { _, item -> item.hashCode() }
+                key = { index, item -> "${index}_${item.first}_${item.second}" }
             ) { index, time ->
 
                 Card(

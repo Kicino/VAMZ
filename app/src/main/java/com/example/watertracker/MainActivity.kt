@@ -18,8 +18,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         //vytvorenie notification channel
-        createNotificationChannel()
 
+        createNotificationChannel()
         //permission na notifikacie, od android 13
         if (Build.VERSION.SDK_INT >= 33) {
             ActivityCompat.requestPermissions(
